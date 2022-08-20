@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,9 +22,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.Fragment.EditContactFragment;
 import com.example.myapplication.Model.ContactModel;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.ContactInterface;
+import com.example.myapplication.Util.DataApi;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     Context context;
@@ -77,6 +84,32 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
 
             });
+
+            btn_delete.setOnClickListener(view1 -> {
+                ContactInterface contactInterface = DataApi.getClient().create(ContactInterface.class);
+                contactInterface.deleteContact(contactModelList.get(position).getId()).enqueue(new Callback<ContactModel>() {
+                    @Override
+                    public void onResponse(Call<ContactModel> call, Response<ContactModel> response) {
+                        if (response.body().getStatus().equals("success")) {
+                            contactModelList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, contactModelList.size());
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ContactModel> call, Throwable t) {
+
+                    }
+                });
+
+            });
+
+
             dialog.show();
 
 

@@ -34,4 +34,10 @@ public interface ContactInterface  {
             @Field("phone_number") String phone_number
     );
 
+    @FormUrlEncoded
+    @POST("delete_contact.php")
+        Call<ContactModel> deleteContact (
+                @Field("id") String id
+        );
+
 }
