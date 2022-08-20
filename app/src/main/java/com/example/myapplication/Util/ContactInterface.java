@@ -25,4 +25,13 @@ public interface ContactInterface  {
             @Field("phone_number") String phone_number
     );
 
+    @FormUrlEncoded
+    @POST("edit_contact.php")
+    Call<ContactModel> editContact (
+            @Field("id") String id,
+            @Field("name") String name,
+            @Field("address") String address,
+            @Field("phone_number") String phone_number
+    );
+
 }
