@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,13 @@ public class HomeFragment extends Fragment {
 
         rv_contact = view.findViewById(R.id.rv_contact);
         btn_add = view.findViewById(R.id.btn_add);
+
+        btn_add.setOnClickListener(view1 -> {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new CreateNewFragment());
+            fragmentTransaction.commit();
+            fragmentTransaction.addToBackStack(null);
+        });
 
 
         // called get contact

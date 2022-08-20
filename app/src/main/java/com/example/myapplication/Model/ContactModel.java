@@ -14,12 +14,14 @@ public class ContactModel implements Serializable {
     String address;
     @SerializedName("phone_number")
     String phone_number;
-
-    public ContactModel (String id, String name, String address, String phone_number){
+    @SerializedName("status")
+    String status;
+    public ContactModel (String id, String name, String address, String phone_number, String status){
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
+        this.status = status;
     }
 
     public String getId() {
@@ -52,5 +54,14 @@ public class ContactModel implements Serializable {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
